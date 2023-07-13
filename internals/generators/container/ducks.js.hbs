@@ -1,0 +1,73 @@
+import { createSelector } from 'reselect';
+import produce from 'immer';
+import {
+  initialState{{ properCase name }}Type,
+  {{ properCase name }}ActionTypes
+} from './types';
+
+
+/*
+ *
+ * {{ properCase name }} constants
+ *
+ */
+export const DEFAULT_ACTION = 'app/{{ properCase name }}/DEFAULT_ACTION';
+{{#if form}}
+export const UPDATE_ACTION = 'app/{{ properCase name }}/UPDATE_ACTION';
+{{/if}}
+
+
+/*
+ *
+ * {{ properCase name }} reducer
+ *
+ */
+export const initialState : initialState{{ properCase name }}Type = {
+  error: '',
+  loaded: false,
+  loading: false,
+};
+
+export default (state = initialState, action: {{ properCase name }}ActionTypes) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case DEFAULT_ACTION:
+        break;
+      {{#if form}}  
+      case UPDATE_ACTION:
+        break;
+      {{/if}}  
+    }
+  });
+
+/**
+ * Direct selector to the {{ camelCase name }} state domain
+ */
+const select{{ properCase name }}Domain = state => state.{{ camelCase name }} || initialState;
+
+/**
+ * Default selector used by {{ properCase name }}
+ */
+export const makeSelect{{ properCase name }} = () =>
+  createSelector(select{{ properCase name }}Domain, substate => substate);
+
+
+/*
+ *
+ * {{ properCase name }} actions
+ *
+ */
+export function defaultAction():{{ properCase name }}ActionTypes {
+  return {
+    type: DEFAULT_ACTION,
+  };
+}
+{{#if form}}
+export function update{{ properCase name }}(data,action):{{ properCase name }}ActionTypes {
+  return {
+    type: UPDATE_ACTION,
+    data,
+    action
+  };
+}
+{{/if}}

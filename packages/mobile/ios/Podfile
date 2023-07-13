@@ -1,0 +1,114 @@
+platform :ios, '9.0'
+require_relative '../../../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+target 'Hakeemy' do
+  # Pods for Hakeemy
+  pod 'FBLazyVector', :path => "../../../node_modules/react-native/Libraries/FBLazyVector"
+  pod 'FBReactNativeSpec', :path => "../../../node_modules/react-native/Libraries/FBReactNativeSpec"
+  pod 'RCTRequired', :path => "../../../node_modules/react-native/Libraries/RCTRequired"
+  pod 'RCTTypeSafety', :path => "../../../node_modules/react-native/Libraries/TypeSafety"
+  pod 'React', :path => '../../../node_modules/react-native/'
+  pod 'React-Core', :path => '../../../node_modules/react-native/'#, :modular_headers => true
+  pod 'React-CoreModules', :path => '../../../node_modules/react-native/React/CoreModules'
+  pod 'React-Core/DevSupport', :path => '../../../node_modules/react-native/'
+  pod 'React-RCTActionSheet', :path => '../../../node_modules/react-native/Libraries/ActionSheetIOS'#, :modular_headers => true
+  pod 'React-RCTAnimation', :path => '../../../node_modules/react-native/Libraries/NativeAnimation'#, :modular_headers => true
+  pod 'React-RCTBlob', :path => '../../../node_modules/react-native/Libraries/Blob'#, :modular_headers => true
+  pod 'React-RCTImage', :path => '../../../node_modules/react-native/Libraries/Image'#, :modular_headers => true
+  pod 'React-RCTLinking', :path => '../../../node_modules/react-native/Libraries/LinkingIOS'#, :modular_headers => true
+  pod 'React-RCTNetwork', :path => '../../../node_modules/react-native/Libraries/Network'#, :modular_headers => true
+  pod 'React-RCTSettings', :path => '../../../node_modules/react-native/Libraries/Settings'#, :modular_headers => true
+  pod 'React-RCTText', :path => '../../../node_modules/react-native/Libraries/Text'#, :modular_headers => true
+  pod 'React-RCTVibration', :path => '../../../node_modules/react-native/Libraries/Vibration'#, :modular_headers => true
+  pod 'React-Core/RCTWebSocket', :path => '../../../node_modules/react-native/'#, :modular_headers => true
+
+  pod 'React-cxxreact', :path => '../../../node_modules/react-native/ReactCommon/cxxreact'#, :modular_headers => true
+  pod 'React-jsi', :path => '../../../node_modules/react-native/ReactCommon/jsi' #, :modular_headers => true
+  pod 'React-jsiexecutor', :path => '../../../node_modules/react-native/ReactCommon/jsiexecutor'#, :modular_headers => true
+  pod 'React-jsinspector', :path => '../../../node_modules/react-native/ReactCommon/jsinspector'#, :modular_headers => true
+  pod 'ReactCommon/jscallinvoker', :path => "../../../node_modules/react-native/ReactCommon"
+  pod 'ReactCommon/turbomodule/core', :path => "../../../node_modules/react-native/ReactCommon"
+  pod 'Yoga', :path => '../../../node_modules/react-native/ReactCommon/yoga'#, :modular_headers => true
+
+  pod 'DoubleConversion', :podspec => '../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'#, :modular_headers => true
+  pod 'glog', :podspec => '../../../node_modules/react-native/third-party-podspecs/glog.podspec'#, :modular_headers => true
+  pod 'Folly', :podspec => '../../../node_modules/react-native/third-party-podspecs/Folly.podspec'#, :modular_headers => true
+
+
+  #extra
+  pod 'react-native-geolocation', path: '../../../node_modules/@react-native-community/geolocation'
+  pod 'RNVectorIcons', :path => '../../../node_modules/react-native-vector-icons'
+  pod 'RCTRestart', :path => '../../../node_modules/react-native-restart/ios'
+  pod 'RNShare', :path => '../../../node_modules/react-native-share'
+  pod 'RNDeviceInfo', :path => '../../../node_modules/react-native-device-info'
+  pod 'RNSound', :path => '../../../node_modules/react-native-sound'
+  pod 'react-native-image-picker', :path => '../../../node_modules/react-native-image-picker'
+  pod 'rn-fetch-blob', :path => '../../../node_modules/rn-fetch-blob'
+  pod 'RNFirebase', :path => '../../../node_modules/react-native-firebase/ios'
+  pod 'RNGestureHandler', :path => '../../../node_modules/react-native-gesture-handler'
+  pod 'RNReanimated', :path => '../../../node_modules/react-native-reanimated'
+
+  pod 'react-native-safe-area-context', :path => '../../../node_modules/react-native-safe-area-context'
+
+  # pod 'DPMGpsState', :path => '../../../node_modules/react-native-gps-state'
+  pod 'react-native-gps-state', :path => '../../../node_modules/react-native-gps-state'
+
+  pod 'RNGoogleSignin', :path => '../../../node_modules/@react-native-community/google-signin'
+  pod 'react-native-webview', :path => '../../../node_modules/react-native-webview'
+
+  # Required by RNFirebase
+  pod 'Firebase/Core', '~> 6.3.0'
+  pod 'Firebase/Messaging', '~> 6.3.0'
+
+
+  # Pods for AppCenter
+  pod 'CodePush', :path => '../../../node_modules/react-native-code-push'
+
+  rn_maps_path = '../../../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+
+  pod 'react-native-fbsdk', :path => '../../../node_modules/react-native-fbsdk'
+  pod 'RNRate', :path => '../../../node_modules/react-native-rate'
+
+  pod 'react-native-get-random-values', :path => '../../../node_modules/react-native-get-random-values'
+
+  pod 'lottie-ios', :path => '../../../node_modules/lottie-ios'
+
+  pod 'lottie-react-native', :path => '../../../node_modules/lottie-react-native'
+
+
+
+
+  target 'HakeemyTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  use_native_modules!
+  # use_modular_headers!
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
+
+target 'Hakeemy-tvOS' do
+  # Pods for Hakeemy-tvOS
+
+  target 'Hakeemy-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

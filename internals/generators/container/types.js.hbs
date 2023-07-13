@@ -1,0 +1,48 @@
+
+import {
+  DEFAULT_ACTION,
+  UPDATE_ACTION,
+  {{#if form}}
+  update{{ properCase name }},
+  {{/if}}
+} from "./ducks";
+{{#if form}}
+import { push } from "connected-react-router";
+import { FormikActions } from "formik";
+{{/if}}
+
+export interface {{ properCase name }}Props {
+  onSubmit: typeof update{{ properCase name }};
+  intl: any;
+  push: typeof push;
+}
+
+{{#if form}}
+export interface Form{{ properCase name }}Props {
+  onSubmit: typeof update{{ properCase name }};
+  intl: any;
+  push: typeof push;
+}
+{{/if}}
+
+export interface initialState{{ properCase name }}Type {
+  loading: boolean;
+  loaded: boolean;
+  error: string;
+}
+
+export interface defaultAction {
+  type: typeof DEFAULT_ACTION;
+}
+
+{{#if form}}
+export interface updateAction {
+  type: typeof UPDATE_ACTION,
+  data: any;
+  action: FormikActions<any>;
+}
+{{/if}}
+
+export type {{ properCase name }}ActionTypes =
+  | defaultAction
+  {{#if form}}| updateAction;{{/if}}

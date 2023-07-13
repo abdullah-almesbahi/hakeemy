@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Hakeemy</string>
+    <string name="reactNativeCodePush_androidDeploymentKey" moduleConfig="true" translatable="false">duZt6cazA-lB0LNP-VDuqz3llmxVqmlpRokbs</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="facebook_app_id">132106097847859</string>
+
+</resources>

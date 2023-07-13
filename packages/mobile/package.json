@@ -1,0 +1,48 @@
+{
+  "name": "@hakeemy/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "compile": "tsc  --esModuleInterop true --noImplicitAny false --strictFunctionTypes true --strictBindCallApply true --noImplicitThis true --skipLibCheck true  --moduleResolution node",
+    "prestart": "npm run compile",
+    "start": "concurrently \"npm run compile -- -w\" \"react-native start --reset-cache\"",
+    "_start": "node ../../node_modules/react-native/local-cli/cli.js start --projectRoot=../../",
+    "deploy": "node ../../node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file ./packages/mobile/index.js --bundle-output ./CodePush/main.jsbundle --assets-dest ./CodePush --dev false && appcenter codepush release -c ./CodePush -a masteryo/Hakeemy-1 -d Production -t 3.0.3 -m",
+    "deploy:android": "node ../../node_modules/react-native/local-cli/cli.js bundle --platform android --entry-file ./packages/mobile/index.js --bundle-output ./CodePushAndroid/index.android.bundle --assets-dest ./CodePushAndroid --dev false && appcenter codepush release -c ./CodePushAndroid -a masteryo/Hakeemy -d Production -t 6.2.3 -m",
+    "test": "jest",
+    "android": "npx react-native run-android",
+    "ios": "react-native run-ios",
+    "studio": "studio android",
+    "xcode": "open ios/Hakeemy.xcworkspace"
+  },
+  "dependencies": {
+    "@hakeemy/app": "*",
+    "react": "16.11.0",
+    "react-native": "0.61.3",
+    "react-native-restart": "^0.0.13",
+    "react-native-code-push": "5.7.0",
+    "intl": "^1.2.5",
+    "react-native-maps": "https://github.com/react-native-community/react-native-maps",
+    "appcenter": "2.6.0",
+    "rn-fetch-blob": "0.11.2",
+    "react-native-modal-datetime-picker": "7.6.0",
+    "@sentry/react-native": "1.1.0",
+    "react-native-version-check": "3.3.1",
+    "lottie-react-native": "3.4.0",
+    "lottie-ios": "3.1.3",
+    "react-native-keyboard-aware-scroll-view": "0.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@react-native-community/eslint-config": "0.0.5",
+    "babel-jest": "24.9.0",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "metro-react-native-babel-preset": "0.56.0",
+    "react-test-renderer": "16.9.0",
+    "concurrently": "5.0.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

@@ -1,0 +1,579 @@
+type AboutUs @db(name: "about_us") {
+  id: Int! @id
+  arabicContent: String! @db(name: "arabic_content")
+  englishContent: String! @db(name: "english_content")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Admin @db(name: "admin") {
+  id: Int! @id
+  email: String! @unique
+  pass: String
+  superAdmin: Int! @db(name: "super_admin") @default(value: 0)
+  user: String @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Appointment @db(name: "appointment") {
+  id: Int! @id
+  apointmentDate: String! @db(name: "apointment_date")
+  apointmentFulldate: Int! @db(name: "apointment_fulldate")
+  apointmentTime: String! @db(name: "apointment_time")
+  diseaseId: Disease @db(name: "disease_id")
+  doctorArabic: String! @db(name: "doctor_arabic")
+  doctorId: Doctor @db(name: "doctor_id")
+  doctorName: String! @db(name: "doctor_name")
+  dtId: DoctorSheduleTime @db(name: "dt_id")
+  gender: String!
+  hospitalId: Hospital @db(name: "hospital_id")
+  isRead: Int! @db(name: "is_read") @default(value: 0)
+  optId: OptTime @db(name: "opt_id")
+  patientId: Patient @db(name: "patient_id")
+  phone: String!
+  phoneCode: String @db(name: "phone_code")
+  scheduleTimeId: SheduleTime @db(name: "schedule_time_id")
+  # 0 for unused,1 for approved, 2 for pending
+  status: Int @default(value: 0)
+  #createdAt: DateTime! @createdAt
+  #updatedAt: DateTime! @updatedAt
+}
+
+type Blog @db(name: "blogs") {
+  id: Int! @id
+  bannerImage: String! @db(name: "banner_image")
+  createdDate: DateTime! @db(name: "created_date") @createdAt
+  hospitalId: Hospital @db(name: "hospital_id")
+  name: String!
+  status: Int! @default(value: 1)
+  updatedAt: DateTime @updatedAt
+}
+
+type BlogComment @db(name: "blog_comments") {
+  id: Int! @id
+  commentator: Int!
+  commentatorName: String! @db(name: "commentator_name")
+  comments: String!
+  logCreated: DateTime! @db(name: "log_created") @createdAt
+  postId: BlogPost @db(name: "post_id")
+  updatedAt: DateTime @updatedAt
+}
+
+type BlogPost @db(name: "blog_posts") {
+  id: Int! @id
+  blogId: Blog @db(name: "blog_id")
+  hospitalId: Hospital @db(name: "hospital_id")
+  logCreated: DateTime! @db(name: "log_created") @createdAt
+  postContent: String! @db(name: "post_content")
+  postTitle: String! @db(name: "post_title")
+  status: Int! @default(value: 1)
+  totalViewers: Int! @db(name: "total_viewers") @default(value: 0)
+  images : [PostImage]
+  updatedAt: DateTime @updatedAt
+}
+
+type PostImage @db(name: "post_images") {
+  id: Int! @id
+  isDefault: Int! @db(name: "is_default") @default(value: 0)
+  pic: String!
+  postId: BlogPost @db(name: "post_id")
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt  
+}
+
+type City @db(name: "city") {
+  id: Int! @id
+  city: String
+  cityArabic: String! @db(name: "city_arabic")
+  countryId: Int @db(name: "country_id")
+  hospital: [Hospital]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type ContactUs @db(name: "contact_us") {
+  id: Int! @id
+  address: String!
+  email: String!
+  lat: String!
+  lon: String!
+  phone: String!
+  pobox: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Country @db(name: "country") {
+  id: Int! @id
+  country: String
+  countryArabic: String! @db(name: "country_arabic")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Disease @db(name: "disease") {
+  id: Int! @id
+  disease: String
+  diseaseArabic: String! @db(name: "disease_arabic")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type DiseaseCovered @db(name: "disease_covered") {
+  id: Int! @id
+  diseaseId: Int @db(name: "disease_id")
+  insuranceCatId: Int @db(name: "insurance_cat_id")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Doctor @db(name: "doctor") {
+  id: Int! @id
+  apiKey: String! @db(name: "api_key")
+  designation: String
+  doctorCv: String! @db(name: "doctor_cv")
+  email: String
+  gender: String
+  mohcard: String
+  mohId: String! @db(name: "moh_id")
+  name: String
+  nameArabic: String @db(name: "name_arabic")
+  password: String! @default(value: "123456")
+  phone: String
+  fees: String
+  picture: String
+  specialityId: Int @db(name: "speciality_id")
+  specialities: Speciality @relation(link: TABLE, name: "DoctorSpeciality")
+  hospital: [Hospital] @relation(link: TABLE, name: "HospitalDoctor")
+  status: Int @default(value: 1)
+  updatedAt: DateTime @updatedAt
+  createdDate: DateTime! @db(name: "created_date") @createdAt
+}
+
+type DoctorOld @db(name: "doctor_old") {
+  id: Int! @id
+  apiKey: String! @db(name: "api_key")
+  createdDate: DateTime! @db(name: "created_date") @createdAt
+  designation: String!
+  doctorCv: String! @db(name: "doctor_cv")
+  doctorsRating: [DoctorsRating]
+  email: String
+  gender: String!
+  #hospitalDoctors: [HospitalDoctor]
+  mohcard: String
+  mohId: String! @db(name: "moh_id")
+  name: String
+  nameArabic: String! @db(name: "name_arabic")
+  password: String! @default(value: "123456")
+  phone: String
+  fees: String
+  picture: String
+  speciality: Speciality @db(name: "speciality_id")
+  status: Int @default(value: 1)
+
+  updatedAt: DateTime! @updatedAt
+}
+
+type DoctorShedule @db(name: "doctor_shedule") {
+  id: Int! @id
+  date: Int
+  doctorId: Int @db(name: "doctor_id")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type DoctorSheduleTime @db(name: "doctor_shedule_time") {
+  id: Int! @id
+  drSheduleId: Int @db(name: "dr_shedule_id")
+  scheduleTime: Int @db(name: "schedule_time")
+  status: Int @default(value: 1)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type DoctorSpeciality @db(name: "doctor_speciality") @relationTable {
+#  #id: Int! @id
+  doctorId: Doctor @db(name: "doctor_id")
+  specialityId: Speciality @db(name: "speciality_id")
+}
+
+type DoctorsRating @db(name: "doctors_rating") {
+  id: Int! @id
+  doctors: DoctorOld @db(name: "doctors_id")
+  rating: String
+  systemIp: String! @db(name: "system_ip")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type DrShedule @db(name: "dr_shedule") {
+  id: Int! @id
+  date: DateTime
+  doctorId: Int @db(name: "doctor_id")
+  hospitalId: Int @db(name: "hospital_id")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Facility @db(name: "facilities") {
+  id: Int! @id
+  facility: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Hospital @db(name: "hospital") {
+  id: Int! @id
+  address: String!
+  addressArabic: String! @db(name: "address_arabic")
+  apiKey: String! @db(name: "api_key")
+  city: City @db(name: "city_id")
+  #countryId: Int! @db(name: "country_id")
+  countryId: Country @db(name: "country_id")
+  email: String
+  hospital: String
+  hospitalArabic: String! @db(name: "hospital_arabic")
+  #doctors: [HospitalDoctor]
+  doctors: [Doctor]  @relation( name: "HospitalDoctor")
+  language: String!
+  latitude: String!
+  location: String!
+  logo: String
+  longitude: String!
+  password: String
+  phone: String
+  phone1: String!
+  status: Int @default(value: 0)
+  type: String
+  uniqeId: String! @db(name: "uniqe_id")
+  insurances: [Insurance] @relation(link: TABLE, name: "HospitalInsurance")
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  createdDate: DateTime! @db(name: "created_date") 
+}
+
+type HospitalDoctor @db(name: "hospital_doctors") @relationTable   {
+  #id: Int! @id
+  #createdDate: DateTime! @db(name: "created_date")  @createdAt
+  dr: Doctor @db(name: "dr_id")
+  hospital: Hospital @db(name: "hospital_id")
+  #status: Int @default(value: 0)
+  #updatedAt: DateTime! @updatedAt
+}
+
+type HospitalFacility @db(name: "hospital_facilities") {
+  id: Int! @id
+  facilityId: Int @db(name: "facility_id")
+  hospitalId: Int @db(name: "hospital_id")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type HospitalInsurance @db(name: "hospital_insurance")  @relationTable  {
+  #id: Int! @id
+  #category: Int
+  hospitalId: Hospital @db(name: "hospital_id")
+  insurance: Insurance
+  #createdAt: DateTime! @createdAt
+  #updatedAt: DateTime! @updatedAt  
+}
+
+type HospitalRating @db(name: "hospital_rating") {
+  id: Int! @id
+  hospitalId: Int @db(name: "hospital_id")
+  rating: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Illness @db(name: "illness") {
+  id: Int! @id
+  illness: String
+  illnessArabic: String @db(name: "illness_arabic")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Insurance @db(name: "insurance") {
+  id: Int! @id
+  countryId: Int! @db(name: "country_id")
+  #hospitalInsurance: [HospitalInsurance]
+  hospitals: [Hospital] @relation(name: "HospitalInsurance")
+  insurance: String
+  insuranceArabic: String @db(name: "insurance_arabic")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type InsuranceCategory @db(name: "insurance_category") {
+  id: Int! @id
+  category: String
+  insuranceId: Int @db(name: "insurance_id")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Job @db(name: "job") {
+  id: Int! @id
+  position: String!
+  positionArabic: String! @db(name: "position_arabic")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Language @db(name: "languages") {
+  id: Int! @id
+  language: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Message @db(name: "message") {
+  id: Int! @id
+  fromUser: Int! @db(name: "from_user")
+  # 1 for delete by doctor and 2 for delete by patient
+  isDelete: Int! @db(name: "is_delete") @default(value: 0)
+  # 0 for no read, 1 for read
+  isRead: Int! @db(name: "is_read") @default(value: 0)
+  logCreate: DateTime! @db(name: "log_create") @createdAt
+  message: String!
+  # 1 for doctor, 2 for patient
+  sentBy: Int! @db(name: "sent_by")
+  toUser: Int! @db(name: "to_user")
+  updatedAt: DateTime! @updatedAt
+}
+
+type Migration @db(name: "migrations") {
+  id: Int! @id
+  batch: Int!
+  migration: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Offer @db(name: "offer") {
+  id: Int! @id
+  description: String!
+  descriptionArabic: String! @db(name: "description_arabic")
+  endDate: DateTime! @db(name: "end_date")
+  heading: String!
+  headingArabic: String! @db(name: "heading_arabic")
+  hospitalId: Int! @db(name: "hospital_id")
+  offerImage: String! @db(name: "offer_image")
+  position: Int!
+  startDate: DateTime! @db(name: "start_date")
+  status: Int! @default(value: 0)
+  # 0 for free, 1 for paid, 2 for paid to top
+  type: Int!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type OnlineAppointment @db(name: "online_appointment") {
+  id: Int! @id
+  apointmentDate: String! @db(name: "apointment_date")
+  apointmentFulldate: Int! @db(name: "apointment_fulldate")
+  apointmentTime: String! @db(name: "apointment_time")
+  diseaseId: Int @db(name: "disease_id")
+  doctorArabic: String! @db(name: "doctor_arabic")
+  doctorId: Int @db(name: "doctor_id")
+  doctorName: String! @db(name: "doctor_name")
+  dtId: Int @db(name: "dt_id")
+  gender: String!
+  optId: Int @db(name: "opt_id")
+  patientId: Int @db(name: "patient_id")
+  phone: String!
+  phoneCode: String @db(name: "phone_code")
+  scheduleTimeId: Int! @db(name: "schedule_time_id")
+  # 0 for unused,1 for approved, 2 for pending
+  status: Int @default(value: 0)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type OnlineDoctor @db(name: "online_doctor") {
+  id: Int! @id
+  apiKey: String! @db(name: "api_key")
+  createdDate: DateTime! @db(name: "created_date") @createdAt
+  designation: String!
+  doctorCv: String! @db(name: "doctor_cv")
+  email: String
+  gender: String!
+  lastSeen: DateTime! @db(name: "last_seen") @updatedAt
+  mohcard: String
+  mohId: String! @db(name: "moh_id")
+  name: String
+  nameArabic: String! @db(name: "name_arabic")
+  password: String! @default(value: "123456")
+  phone: String
+  picture: String
+  specialityId: Int @db(name: "speciality_id")
+  status: Int @default(value: 1)
+}
+
+type OnlineRating @db(name: "online_rating") {
+  id: Int! @id
+  doctorsId: Int @db(name: "doctors_id")
+  rating: String
+  systemIp: String! @db(name: "system_ip")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type OptTime @db(name: "opt_time") {
+  id: Int! @id
+  fifteenMins: String @db(name: "fifteen_mins")
+  thirtyMins: String @db(name: "thirty_mins")
+  twentyMins: String @db(name: "twenty_mins")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type PasswordReset @db(name: "password_resets") {
+   id: Int! @id
+  createdAt: DateTime! @db(name: "created_at") @createdAt
+  email: String!
+  token: String!
+  updatedAt: DateTime! @updatedAt
+}
+
+type Patient @db(name: "patient") {
+  id: Int! @id
+  age: Int!
+  apiKey: String! @db(name: "api_key")
+  createdDate: DateTime! @db(name: "created_date") @createdAt
+  dob: String
+  email: String
+  gender: String
+  lastAction: String! @db(name: "last_action")
+  lastSeen: DateTime! @db(name: "last_seen") @updatedAt
+  mailSubs: Int @db(name: "mail_subs")
+  mobile: String
+  name: String
+  password: String
+  status: Int! @default(value: 0)
+  uniqeId: String! @db(name: "uniqe_id")
+}
+
+
+
+type SearchDesign @db(name: "search_design") {
+  id: Int! @id
+  addressColor: String! @db(name: "address_color")
+  addressFamily: String! @db(name: "address_family")
+  addressStyle: String! @db(name: "address_style")
+  designationColor: String! @db(name: "designation_color")
+  designationFamily: String! @db(name: "designation_family")
+  designationStyle: String! @db(name: "designation_style")
+  doctorColor: String! @db(name: "doctor_color")
+  doctorFamily: String! @db(name: "doctor_family")
+  doctorStyle: String! @db(name: "doctor_style")
+  emailColor: String! @db(name: "email_color")
+  emailFamily: String! @db(name: "email_family")
+  emailStyle: String! @db(name: "email_style")
+  nameColor: String! @db(name: "name_color")
+  nameFamily: String! @db(name: "name_family")
+  nameStyle: String! @db(name: "name_style")
+  phoneColor: String! @db(name: "phone_color")
+  phoneFamily: String! @db(name: "phone_family")
+  phoneStyle: String! @db(name: "phone_style")
+  ratingColor: String! @db(name: "rating_color")
+  ratingFamily: String! @db(name: "rating_family")
+  ratingStyle: String! @db(name: "rating_style")
+  specialityColor: String! @db(name: "speciality_color")
+  specialityFamily: String! @db(name: "speciality_family")
+  specialityStyle: String! @db(name: "speciality_style")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type SheduleTime @db(name: "shedule_time") {
+  id: Int! @id
+  drSheduleId: Int @db(name: "dr_shedule_id")
+  scheduleFullDate: Int! @db(name: "schedule_full_date")
+  sheduleTime: String @db(name: "shedule_time")
+  status: Int @default(value: 1)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Slider @db(name: "slider") {
+  id: Int! @id
+  arabicHeading: String! @db(name: "arabic_heading")
+  banner: String!
+  heading: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Speciality @db(name: "speciality") {
+  id: Int! @id
+  doctors: [Doctor] @relation(name: "DoctorSpeciality")
+  speciality: String
+  specialityArabic: String @db(name: "speciality_arabic")
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt  
+}
+
+type EmailSubscription @db(name: "subscription") {
+  id: Int! @id
+  email: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type User @db(name: "users") {
+  id: Int! @id
+  createdAt: DateTime! @db(name: "created_at") @createdAt
+  email: String! @unique
+  name: String!
+  password: String!
+  rememberToken: String @db(name: "remember_token")
+  updatedAt: DateTime! @db(name: "updated_at")  @updatedAt
+}
+
+type VideoRequest @db(name: "video_request") {
+  id: Int! @id
+  doctorId: Int! @db(name: "doctor_id")
+  joinCall: Int! @db(name: "join_call") @default(value: 0)
+  patientId: Int! @db(name: "patient_id")
+  requestDate: Int! @db(name: "request_date")
+  videoCode: Int! @db(name: "video_code") @default(value: 0)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Visitor @db(name: "visitors") {
+  id: Int! @id
+  country: String @default(value: "")
+  hits: Int!
+  ipAddress: String! @db(name: "ip_address")
+  visitDate: DateTime! @db(name: "visit_date")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+type Translation @db(name: "translation") {
+  id: Int! @id
+  arabi: String!
+  english: String!
+  index: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt  
+}
+
+
+### New 
+
+type Page {
+  id: Int! @id
+  slug:String @unique
+  slug_ar:String @unique
+  title: String
+  title_ar: String
+  content: String
+  content_ar: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}

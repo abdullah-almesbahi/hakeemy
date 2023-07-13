@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "name": "api",
+  "alias": "api.ehsbha.com",
+  "env": {
+    "IS_NOW": "true",
+    "APP_SECRET": "adfSD5sd76SFF"
+  },
+  "builds": [
+    {
+      "src": "/src/frontend/index.ts",
+      "use": "@now/node-server"
+    },
+    {
+      "src": "/src/admin/index.ts",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    { "src": "/_admin", "dest": "/src/admin" },
+    { "src": "/", "dest": "/src/frontend" }
+  ]
+}

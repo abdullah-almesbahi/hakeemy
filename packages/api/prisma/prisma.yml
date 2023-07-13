@@ -1,0 +1,18 @@
+# Specifies the HTTP endpoint of your Prisma API.
+endpoint: https://prisma.hakeemy.com/hakeemy/default
+#endpoint: http://192.168.10.10:4466/hakeemy/default3
+#secret: ${env:PRISMA_SECRET}
+
+# Defines your models, each model is mapped to the database as a table.
+datamodel: datamodel.prisma
+
+# Specifies the language and directory for the generated Prisma client.
+generate:
+  - generator: typescript-client
+    output: ../src/generated/prisma-client/
+
+# Ensures Prisma client is re-generated after a datamodel change.
+hooks:
+  post-deploy:
+    - prisma generate
+    - npx nexus-prisma-generate --client ./src/generated/prisma-client --output ./src/generated/nexus-prisma # Runs the codegen tool from nexus-prisma.

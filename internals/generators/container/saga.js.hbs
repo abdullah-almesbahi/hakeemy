@@ -1,0 +1,56 @@
+import { take, call, put, select , fork } from 'redux-saga/effects';
+import {
+DEFAULT_ACTION,
+{{#if form}}
+UPDATE_ACTION
+{{/if}}
+} from "./ducks";
+import API from "utils/api";
+
+/**
+* Load {{ camelCase name }} saga
+*/
+export function* root{{ properCase name }}Saga() {
+while (true) {
+yield take(DEFAULT_ACTION);
+try {
+const response = yield call(API.getSettingStatus);
+if (response && response.status === true) {
+// yield put(schedulesLoaded(response.data));
+}
+} catch (error) {
+// yield put(scheduleLoadingError(error.message));
+}
+}
+}
+
+{{#if form}}
+/**
+* update {{ camelCase name }} saga
+*/
+export function* update{{ properCase name }}Saga() {
+while (true) {
+const { data, action } = yield take(UPDATE_ACTION);
+try {
+const response = yield call(API.setTeacherPersonalInfo, data);
+if (response && response.status === true) {
+// yield put(updateProfileSuccess());
+// yield call(action.setSubmitting, false);
+// yield put(push(ROUTE_SETTINGS));
+}
+} catch (error) {
+// yield call(action.setErrors, { item_name: error.message });
+// yield call(action.setSubmitting, false);
+// yield put(updateProfileError(error.message));
+}
+}
+}
+{{/if}}
+
+// Individual exports for testing
+export default function* {{ properCase name }}Saga() {
+yield fork(root{{ properCase name }}Saga);
+{{#if form}}
+yield fork(update{{ properCase name }}Saga);
+{{/if}}
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@hakeemy/api",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "main": "esm/index.ts",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "scripts": {
+    "start": "node build/index.js",
+    "build": "rimraf build && yarn compile",
+    "deploy": "yarn build && yarn now",
+    "compile": "tsc -b",
+    "build-esm": "rimraf ./esm &&  tsc --rootDir src --declaration true --outDir esm --module es2015 --moduleResolution node",
+    "xxxbuild-esm": "rimraf ./esm && tsc -r dotenv/config --esModuleInterop true --outDir esm --rootDir src --noImplicitAny false --strictFunctionTypes true --strictBindCallApply true --noImplicitThis true --skipLibCheck true --module es2015 --moduleResolution node",
+    "dev": "npm-run-all --parallel startdev playground",
+    "startdev": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  ./src",
+    "frontend": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  ./src/frontend.ts",
+    "admin": "ts-node-dev --no-notify --respawn --transpileOnly -r dotenv/config  ./src/admin.ts",
+    "playground": "graphql playground --port 5000",
+    "now": "now",
+    "prisma": "prisma"
+  },
+  "dependencies": {
+    "bcrypt": "3.0.6",
+    "graphql": "14.2.1",
+    "graphql-shield": "6.0.3",
+    "graphql-yoga": "1.18.1",
+    "graphql-middleware": "3.0.2",
+    "jsonwebtoken": "8.5.1",
+    "nexus": "0.12.0-beta.6",
+    "nexus-prisma": "0.3.7",
+    "axios": "0.19.0",
+    "prisma-client-lib": "1.34.3",
+    "aws-sdk": "2.595.0",
+    "sequelize": "5.21.3",
+    "mysql2": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "3.0.0",
+    "@types/graphql": "14.2.2",
+    "@types/jsonwebtoken": "8.3.2",
+    "@types/node": "12.6.8",
+    "@types/sequelize": "4.28.8",
+    "dotenv": "8.0.0",
+    "@types/ws": "6.0.1",
+    "ts-node-dev": "1.0.0-pre.40",
+    "prisma": "1.34.3",
+    "rimraf": "*",
+    "npm-run-all": "4.1.5",
+    "typescript": "3.6.3"
+  }
+}

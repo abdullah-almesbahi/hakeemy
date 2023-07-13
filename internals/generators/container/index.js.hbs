@@ -1,0 +1,132 @@
+/**
+*
+* {{properCase name }}
+*
+*/
+
+{{#if memo}}
+import React, { memo } from 'react';
+{{else}}
+import React from 'react';
+{{/if}}
+import { View, Text ,ScrollView} from "react-native";
+
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+{{#if wantActionsAndReducer}}
+// import { useInjectReducer } from 'utils/injectReducer';
+import reducer , { 
+	makeSelect{{properCase name}} , 
+	{{#if form}}
+	update{{ properCase name }} ,
+    {{/if}}
+} from './ducks';
+import { {{ properCase name }}Props } from './types'
+import { createStructuredSelector } from 'reselect';
+import { push } from "connected-react-router";
+{{/if}}
+{{#if wantSaga}}
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from './saga';
+{{/if}}
+
+{{#if wantMessages}}
+import { FormattedMessage , injectIntl } from 'react-intl';
+import messages from './messages';
+{{/if}}
+
+{{#if form}}
+import Form{{ properCase name }} from './formik'
+{{/if}}
+
+{{#if graphql}}
+import { graphql } from "react-apollo";
+import {{ properCase name }}Mutation from "../../graphql/{{ properCase name }}Mutation";
+{{/if}}
+
+{{#if wantHeaders}}
+import { Appbar } from "react-native-paper";
+import { DrawerContext } from "../../hooks/useDrawerContext";
+import { Helmet } from "components/Helmet";
+{{/if}}
+
+
+import styles from "./styles";
+
+
+const {{ properCase name }} = (props:{{ properCase name }}Props) => {
+	 {{#if wantActionsAndReducer}}
+	 // useInjectReducer({ key: '{{ camelCase name }}', reducer });
+	 {{/if}}
+	 {{#if wantSaga}}
+	 useInjectSaga({ key: '{{ camelCase name }}', saga });
+	 {{/if}}
+	 {{#if wantHeaders}}
+	 const openDrawer = React.useContext(DrawerContext);
+	 {{/if}}
+
+
+	 return (
+		<View style={styles.container}>
+			{{#if form}}
+			<Form{{ properCase name }} 
+				intl={props.intl}
+				onSubmit={props.onSubmit}
+				push={props.push}
+			/>
+			{{else}}
+				{{#if wantHeaders}}
+				<Helmet titleTemplate="{{properCase name}}" defaultTitle="Description of {{properCase name}}" />
+
+				<Appbar.Header>
+					<Appbar.Action icon="menu" onPress={()=> openDrawer()} />
+					<Appbar.Content title="{{properCase name}}" />
+				</Appbar.Header>
+				{{/if}}
+
+			
+				<ScrollView style={styles.bodyContainer}>
+					<FormattedMessage {...messages.header} />
+				</ScrollView>
+			{{/if}}
+		</View>
+		);
+}
+
+{{#if wantActionsAndReducer}}
+const mapStateToProps = createStructuredSelector({
+	{{ camelCase name }}: makeSelect{{properCase name}}(),
+});
+{{/if}}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		push: page => dispatch(push(page)),
+		{{#if form}}
+		onSubmit: (data, action) => dispatch(update{{ properCase name }}(data, action))
+		{{/if}}
+	};
+}
+
+{{#if wantActionsAndReducer}}
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+{{else}}
+const withConnect = connect(null, mapDispatchToProps);
+{{/if}}
+
+{{#if graphql}}
+const with{{ properCase name }} = graphql({{ properCase name }}Mutation);
+{{/if}}
+
+export default compose(
+	{{#if graphql}}
+	with{{ properCase name }},
+	{{/if}}
+	withConnect,
+	{{#if form}}
+	injectIntl,
+	{{/if}}
+	{{#if memo}}
+	memo,
+	{{/if}}
+)({{ properCase name }});

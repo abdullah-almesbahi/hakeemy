@@ -1,0 +1,58 @@
+{
+  "name": "hakeemy",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "resolutions": {
+    "graphql": "14.2.1",
+    "@types/react": "16.9.11"
+  },
+  "scripts": {
+    "postinstall": "npx jetify",
+    "dev:web": "yarn workspace @hakeemy/web dev",
+    "build:web": "yarn workspace @hakeemy/web build",
+    "serve:web": "yarn workspace @hakeemy/web serve",
+    "deploy:web": "yarn workspace @hakeemy/web build && yarn workspace @hakeemy/web deploy",
+    "dev:mobile": "yarn workspace @hakeemy/mobile start",
+    "deploy:mobile": "yarn workspace @hakeemy/mobile deploy",
+    "deploy:mobile:android": "yarn workspace @hakeemy/mobile deploy:android",
+    "release:mobile:android": "cd packages/mobile/android && ./gradlew bundleRelease",
+    "release:mobile:android:assembleRelease": "cd packages/mobile/android && ./gradlew assembleRelease",
+    "dev:api": "yarn workspace @hakeemy/api dev",
+    "build:api": "yarn workspace @hakeemy/api build",
+    "deploy:api": "yarn workspace @hakeemy/api deploy",
+    "android": "yarn workspace @hakeemy/mobile android",
+    "ios": "yarn workspace @hakeemy/mobile ios",
+    "studio": "yarn workspace @hakeemy/mobile studio",
+    "xcode": "yarn workspace @hakeemy/mobile xcode",
+    "generate": "plop --plopfile internals/generators/index.js",
+    "prettify": "prettier --write",
+    "extract-intl": "node ./internals/scripts/extract-intl.js",
+    "docker:up": "cd packages/api/prisma && docker-compose up -d && cd ../../../",
+    "docker:down": "cd packages/api/prisma && docker-compose down && cd ../../../",
+    "prisma:deploy": "yarn workspace @hakeemy/api prisma deploy --env-file .env",
+    "prisma:generate": "yarn workspace @hakeemy/api prisma generate",
+    "seo": "yarn workspace @hakeemy/web seo"
+  },
+  "dependencies": {
+    "react-native": "0.61.3"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-typescript": "7.5.5",
+    "@types/jest": "24.0.15",
+    "babel-plugin-react-intl": "3.0.1",
+    "jetifier": "^1.6.4",
+    "node-plop": "0.18.0",
+    "plop": "2.3.0",
+    "prettier": "1.17.0",
+    "react-day-picker": "7.3.1",
+    "shelljs": "^0.8.3",
+    "ts-node-dev": "1.0.0-pre.40",
+    "typescript-react-intl": "^0.4.0",
+    "shx": "0.3.2"
+  }
+}

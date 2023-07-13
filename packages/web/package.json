@@ -1,0 +1,51 @@
+{
+  "name": "@hakeemy/web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "react-app-rewired start",
+    "build": "export NODE_ENV=production && node src/sitemap/generator.js && react-app-rewired build && shx rm -rf prd && shx cp -r build prd",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "serve": "serve -s build -l 5001",
+    "deploy": "aws --profile hakeemy s3 sync build/ s3://beta.hakeemy.com",
+    "seo": "export NODE_ENV=production && node src/sitemap/generator.js && react-snap",
+    "sitemap": "export NODE_ENV=development && node src/sitemap/generator.js"
+  },
+  "dependencies": {
+    "react-native-web-maps2": "*",
+    "@babel/polyfill": "7.4.0",
+    "@hakeemy/app": "*",
+    "react": "16.11.0",
+    "react-app-polyfill": "0.2.2",
+    "react-art": "16.11.0",
+    "react-dom": "16.11.0",
+    "react-google-maps": "^9.4.5",
+    "react-native-web": "0.11.7",
+    "react-scripts": "2.1.8",
+    "resize-observer-polyfill": "1.5.1",
+    "smoothscroll-polyfill": "0.4.3",
+    "@sentry/browser": "5.7.1",
+    "typescript": "3.6.3",
+    "lottie-react-web": "2.1.4"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "@types/smoothscroll-polyfill": "^0.3.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-react-native-web": "^0.11.7",
+    "react-app-rewired": "2.1.4",
+    "sitemap": "5.1.0",
+    "react-snap": "1.23.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "react-native-web-maps2",
+  "version": "0.2.0",
+  "description": "React Native for Web implementation of react-native-maps",
+  "main": "dist/index.js",
+  "main-es": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:react-native-web-community/react-native-web-maps.git"
+  },
+  "author": {
+    "name": "Aurore Malherbes",
+    "email": "aurorem@bam.tech",
+    "url": "https://github.com/aurorem"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "react-native-web-maps"
+  ],
+  "babel": {
+    "presets": [
+      "react-native"
+    ]
+  },
+  "files": [
+    "dist",
+    "src",
+    "yarn.lock"
+  ]
+}
